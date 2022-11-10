@@ -16,6 +16,18 @@ const multiplesErrors = {
 
         return errors;
 
+    },
+    signInErrors(err) {
+        let errors = {email: "", password: ""};
+        
+        if (err.message.includes("null")) {
+            errors.email = "Aucun utilisateur trouvé veuillez-vous inscrire.";
+        }
+        
+        // message: "Mot de passe incorrect"
+        
+
+        return errors;
     }
 
 };

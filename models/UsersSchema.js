@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const { isEmail } = require("validator");
+const bcrypt = require("bcrypt");
 
 
 const UserSchema = new mongoose.Schema(
@@ -24,6 +25,14 @@ const UserSchema = new mongoose.Schema(
     }
 
 );
+
+UserSchema.pre("save", async function(next) {
+    // bcrypt va  génerer  le "Salage" du mdp
+    const salt = await bcrypt.genSalt();
+    // Ne pas faire de fonction fléchée( () => ))à cause du this, bcrypt va Hasher
+    this.password = await bcrypt.hash(this.password, salt);
+    next();
+});
 
 
 module.exports = mongoose.model("user", UserSchema);
