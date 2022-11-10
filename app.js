@@ -17,7 +17,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
-
+app.use(
+    cors({
+        origin: (origin, callback) => callback(null, true),
+        credentials: true,
+    })
+);
 
 app.get("/jwtid", middleware.autoLogInMiddleware, (req, res) => {
     res.status(200).send("Connexion réussie");
