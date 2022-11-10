@@ -6,7 +6,7 @@ const ObjectSchema = new mongoose.Schema(
             type: String,
             trim: true,
             required: true,
-            minLength: 3
+            minLength: 2
         },
         findDate: {
             type: Date,

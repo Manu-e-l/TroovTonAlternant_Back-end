@@ -8,6 +8,7 @@ const middleware = require("./middleware/authMiddleware");
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users.routes");
+let objectRouter = require("./routes/object.routes");
 
 var app = express();
 
@@ -30,5 +31,6 @@ app.get("/jwtid", middleware.autoLogInMiddleware, (req, res) => {
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
+app.use("/object", objectRouter);
 
 module.exports = app;
