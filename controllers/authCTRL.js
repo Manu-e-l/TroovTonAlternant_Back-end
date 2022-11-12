@@ -62,11 +62,11 @@ const authentificationCTRL = {
         Nous sommes heureux de vous compter parmis nous !`;
 
         const transporter = nodemailer.createTransport({
-            host: "smtp.ethereal.email",
-            port: 587,
+            host: process.env.HOST_MAIL,
+            port: process.env.PORT_MAIL,
             auth: {
-                user: "olen82@ethereal.email",
-                pass: "vCM5B3JcHcjsEjJXjz"
+                user: process.env.USER_MAIL,
+                pass: process.env.PASS_MAIL
             }
         });
      
