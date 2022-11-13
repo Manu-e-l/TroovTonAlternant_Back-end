@@ -8,8 +8,8 @@ const authentificationCTRL = require("../controllers/authCTRL");
 /* GET users listing. */
 router.post("/register", authentificationCTRL.signUp);
 router.post("/login", authentificationCTRL.signIn);
-router.post("/welcomeMail", middleware.checkUserMiddleware, authentificationCTRL.welcomeMail);
-router.get("/me", middleware.checkUserMiddleware, authentificationCTRL.getMe);
-router.get("/logout", middleware.checkUserMiddleware, authentificationCTRL.logOut);
+router.post("/welcomeMail", middleware.token, authentificationCTRL.welcomeMail);
+router.get("/me", middleware.token, authentificationCTRL.getMe);
+// router.get("/logout", middleware.token, authentificationCTRL.logOut);
 
 module.exports = router;

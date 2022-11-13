@@ -4,7 +4,8 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 
 const cors = require("cors");
-const middleware = require("./middleware/authMiddleware");
+// Essai Infructueux /////////////////////////////
+// const middleware = require("./middleware/authMiddleware");
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users.routes");
@@ -25,9 +26,10 @@ app.use(
     })
 );
 
-app.get("/jwtid", middleware.autoLogInMiddleware, (req, res) => {
-    res.status(200).send("Connexion réussie");
-});
+// Essai Infructueux /////////////////////////////
+// app.get("/jwtid", middleware.autoLogInMiddleware, (req, res) => {
+//     res.status(200).send("Connexion réussie");
+// });
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
