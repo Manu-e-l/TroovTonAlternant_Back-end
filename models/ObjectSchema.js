@@ -10,6 +10,7 @@ const ObjectSchema = new mongoose.Schema(
         },
         findDate: {
             type: Date,
+            max: Date().toUTCString,
             required: true
         },
         picture: {

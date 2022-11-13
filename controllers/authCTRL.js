@@ -41,7 +41,7 @@ const authentificationCTRL = {
                     process.env.TOKEN_SECRET_KEY,
                     { expiresIn: maxAge }
                 );
-                res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge });
+                res.cookie("acces_token_cookie", token, { httpOnly: true, maxAge: maxAge });
                 res.json({ message: "Connecté", token: token });
             } else {
                 res.status(401).json({ message: "Mot de passe incorrect." });
@@ -52,8 +52,16 @@ const authentificationCTRL = {
             res.status(401).json({ errors });
         }
     },
+    getMe: (req,res) => {
+        const token = String(req.get("Authorization")).split(" ")[1];
+        
+        const decoded = jwt.decode(token, { complete: false });
+
+        return res.json({ content: decoded });
+        
+    },
     logOut: (req, res) => {
-        res.cookie("jwt", "", { maxAge: 1 }).json({ message: "Merci de votre visite, à très bientôt." });
+        res.cookie("acces_token_cookie", "", { maxAge: 1 }).json({ message: "Merci de votre visite, à très bientôt." });
     },
     welcomeMail: async (req, res) => {
         const contentMail = `Bonjour,

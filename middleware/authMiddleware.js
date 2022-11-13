@@ -3,11 +3,11 @@ const jwt = require("jsonwebtoken");
 const middleware = {
 
     checkUserMiddleware (req,res, next) {
-        const cookieToken = req.cookies.jwt;
+        const cookieToken = req.cookies.acces_token_cookie;
         if (cookieToken) {
             jwt.verify(cookieToken, process.env.TOKEN_SECRET_KEY, async (err, data) => {
                 if (err) {
-                    res.cookie("jwt", "", { maxAge: 1 });
+                    res.cookie("acces_token_cookie", "", { maxAge: 1 });
                     next();
                 } else {
                     req.user = data.userId;
@@ -21,7 +21,7 @@ const middleware = {
 
 
     autoLogInMiddleware (req, res, next) {
-        const cookieTokeN = req.cookies.jwt;
+        const cookieTokeN = req.cookies.acces_token_cookie;
         console.log(cookieTokeN);
         if (cookieTokeN){
             jwt.verify(cookieTokeN, process.env.TOKEN_SECRET_KEY, (err, data) => {
