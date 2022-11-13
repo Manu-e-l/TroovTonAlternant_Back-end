@@ -43,7 +43,7 @@ const authentificationCTRL = {
                     { expiresIn: maxAge }
                 );
                 ////////////////////// Essai Infructueux /////////////////////////////
-                // res.cookie("acces_token_cookie", token, { httpOnly: true, maxAge: maxAge });
+                res.cookie("acces_token_cookie", token, { httpOnly: true, maxAge: maxAge });
                 res.json({ message: "Connecté", token: token });
             } else {
                 res.status(401).json({ message: "Mot de passe incorrect." });
@@ -57,15 +57,15 @@ const authentificationCTRL = {
     getMe: (req,res) => {
         const token = String(req.get("Authorization")).split(" ")[1];
         
-        const decoded = jwt.decode(token, { complete: false });
+        const decoded =  jwt.verify(token, process.env.TOKEN_SECRET_KEY);
 
         return res.json({ content: decoded });
         
     },
-    // logOut: (req, res) => {
+    logOut: (req, res) => {
     //     ////////////////////// Essai Infructueux /////////////////////////////
-    //     // res.cookie("acces_token_cookie", "", { maxAge: 1 }).json({ message: "Merci de votre visite, à très bientôt." });
-    // },
+        res.cookie("acces_token_cookie", "", { maxAge: 1 }).json({ message: "Merci de votre visite, à très bientôt." });
+    },
     welcomeMail: async (req, res) => {
         const contentMail = `Bonjour,
         
@@ -82,19 +82,17 @@ const authentificationCTRL = {
         });
      
         let info = await transporter.sendMail({
-            from: "\"Troov Ton Alternant\" <troovtonalternant@example.com>", // sender address
-            to: req.body.mail, // list of receivers
-            subject: "Bienvenue à bord !", // Subject line
-            text: contentMail, // plain text body
+            from: "\"Troov Ton Alternant\" <troovtonalternant@example.com>",
+            to: req.body.mail, 
+            subject: "Bienvenue à bord !", 
+            text: contentMail, 
         // html: "<b>Hello world?</b>", // html body
         });
     
         console.log("Message sent: %s", info.messageId);
-        // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
-    
-        // Preview only available when sending through an Ethereal account
+       
         console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-        // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+       
         if (info.messageId) {
             res.status(200).json({message : "email envoyé"});
         }else{

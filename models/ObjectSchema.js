@@ -12,9 +12,6 @@ const ObjectSchema = new mongoose.Schema(
             type: Date,
             max: Date().toUTCString,
             required: true
-        },
-        picture: {
-            type: String,
         }
 
     }
